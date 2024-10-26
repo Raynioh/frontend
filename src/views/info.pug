@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .container
+    h1 Ticket Information
+
+    if ticket
+      ul
+        li
+          strong Date created: 
+          | #{ticket.dateCreated}
+        li
+          strong VATIN: 
+          | #{ticket.vatin}
+        li
+          strong First Name: 
+          | #{ticket.firstName}
+        li
+          strong Last Name: 
+          | #{ticket.lastName}
+    else
+      p No ticket information available.
+
+    p Current user: #{user.nickname}

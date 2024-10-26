@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .container
+    h1 Generate Ticket
+    form(action="/generate" method="POST")
+      div
+        label(for="firstName") First Name:
+        input(type="text" id="firstName" name="firstName")
+      div
+        label(for="lastName") Last Name:
+        input(type="text" id="lastName" name="lastName")
+      div
+        label(for="vatin") vatin:
+        input(type="text" id="vatin" name="vatin")
+      div
+        button(type="submit") Generate Ticket

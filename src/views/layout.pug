@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title QR Ticket App
+    link(rel="stylesheet" href="/css/style.css")
+  body
+    nav
+      ul
+        li
+          a(href="/") Home
+        li
+          a(href="/generate") Generate Ticket
+        if !user
+          li
+            a(href="/login") Login
+        else
+          li
+            a(href="/logout") Logout
+
+    block content
