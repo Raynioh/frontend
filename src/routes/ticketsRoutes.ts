@@ -1,8 +1,7 @@
 import { Router } from 'express';
 import { requiresAuth } from 'express-openid-connect';
 import { Ticket } from '../models/ticket';
-import { createTicket, getTicketByID, getTicketsByUserID } from '../controllers/controller';
-import axios, {AxiosError} from 'axios';
+import { getTicketByID } from '../controllers/controller';
 
 const router = Router();
 

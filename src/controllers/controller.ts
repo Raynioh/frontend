@@ -1,7 +1,7 @@
 import { Ticket } from "../models/ticket";
 import axios from 'axios';
 
-const backendURL = "https://apiservice-e9m1.onrender.com";
+const backendURL = "http://193.198.53.212:3000";
 
 export async function getAuthToken() : Promise<string | undefined> {
     let token: string | undefined;

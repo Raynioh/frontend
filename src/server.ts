@@ -1,7 +1,6 @@
 import express from 'express';
 import path from 'path'
-import http from 'http';
-import { auth, requiresAuth } from 'express-openid-connect';
+import { auth } from 'express-openid-connect';
 import dotenv from 'dotenv'
 import indexRoutes from './routes/indexRoutes';
 import ticketsRoutes from './routes/ticketsRoutes';
@@ -17,25 +16,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const externalUrl = process.env.RENDER_EXTERNAL_URL;
-const port = externalUrl && process.env.PORT ? parseInt(process.env.PORT) : 3050;
+const baseUrl = process.env.BASE_URL || "193.198.53.212";
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3050;
 
 const config = {
   authRequired : false,
   idpLogout : true,
   secret: process.env.SECRET,
-  baseURL: externalUrl || `https://localhost:${port}`,
+  baseURL: "http://" + baseUrl + ":" + port,
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: process.env.ISSUER_BASE_URL,
   clientSecret: process.env.CLIENT_SECRET,
   authorizationParams: {
-    response_type: 'code' ,
+    response_type: 'code',
+    scope: "openid profile email"
    },
 };
-
-// if (!config.baseURL && !process.env.BASE_URL && process.env.PORT && process.env.NODE_ENV !== 'production') {
-//   config.baseURL = `http://localhost:${port}`;
-// }
 
 app.use(auth(config));
 
@@ -53,16 +49,6 @@ app.use(function (req, res, next) {
   res.status(404).render('error', {errorCode: 404, errorMessage: err.message})
 });
 
-
-if (externalUrl) {
-  const hostname = '0.0.0.0';
-  app.listen(port, hostname, () => {
-    console.log(`Server locally running at http://${hostname}:${port}/ and from
-    outside on ${externalUrl}`);
-  });
-} else {
-  http.createServer(app)
-  .listen(port, () => {
-    console.log(`Listening on ${config.baseURL}`);
-  });
-}
+app.listen(port, baseUrl, () => {
+  console.log(`Listening on ${baseUrl}:${port}`);
+});
